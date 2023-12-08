@@ -1,0 +1,26 @@
+<mat-card *ngIf="desk" class="mat-elevation-z3">
+  <mat-card-header>
+    <div class="img-placeholder">
+      <img
+        src="./../../../assets/images/pokemon.jpeg"
+        alt="Baralho Imagem"
+        loading="lazy"
+      />
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span fxFlex> {{ desk.nome }} </span>
+      </div>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <p><strong>Pokemons:</strong> {{ pokemons }}</p>
+        <p><strong>Trainer:</strong> {{ trainers }}</p>
+        <p><strong>Types:</strong> {{ types }}</p>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-card-subtitle>
+  </mat-card-content>
+</mat-card>

@@ -1,57 +1,104 @@
-<div class="flex items-center justify-center bg-white py-48">
-  <div class="flex flex-col">
-    <div class="flex flex-col mt-8">
-      <div class="container max-w-7xl px-4">
-        <div class="flex flex-wrap justify-center text-center mb-24">
-          <div class="w-full lg:w-6/12 px-4">
-            <h1 class="text-gray-900 text-4xl font-bold mb-8">Baralhos</h1>
-
-            <p class="text-gray-700 text-lg font-light">
-              Escolha o baralho para abrir ou crie um
-            </p>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap justify-center">
-          <div
-            *ngFor="let desk of desks; let i = index"
-            class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4"
+<mat-sidenav-container
+  [class.drawer-opened]="drawer.opened"
+  [hasBackdrop]="true"
+>
+  <mat-sidenav
+    #drawer
+    class="drawer"
+    mode="over"
+    opened="false"
+    position="end"
+    fixedInViewport="true"
+    fixedTopGap="64"
+    fixedBottomGap="0"
+  >
+    <mat-toolbar
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      color="accent"
+    >
+      <div class="flex justify-between w-full">
+        <div *ngIf="desk">{{ desk.nome }}</div>
+        <div>
+          <button
+            mat-icon-button
+            [routerLink]="['/desk/' + deskIndex + '/']"
+            matTooltip="Remover Baralho"
           >
-            <div class="flex flex-col">
-              <a [routerLink]="['/desk/' + i + '/']" class="mx-auto">
-                <img
-                  alt="Avatar"
-                  class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
-                  src="./../../../assets/images/pokemon.jpeg"
-                />
-              </a>
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="removeDesk()"
+            matTooltip="Remover Baralho"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button (click)="drawer.close()" matTooltip="Fechar">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar>
+    <div class="contents">
+      <pk-desk-details [desk]="desk" [deskIndex]="deskIndex"></pk-desk-details>
+    </div>
+  </mat-sidenav>
+  <div class="flex items-center justify-center bg-white py-48">
+    <div class="flex flex-col">
+      <div class="flex flex-col mt-8">
+        <div class="container max-w-7xl px-4">
+          <div class="flex flex-wrap justify-center text-center mb-24">
+            <div class="w-full lg:w-6/12 px-4">
+              <h1 class="text-gray-900 text-4xl font-bold mb-8">Baralhos</h1>
 
-              <div class="text-center mt-6">
-                <h1 class="text-gray-900 text-xl font-bold mb-1">
-                  {{ desk.nome }}
-                </h1>
-
-                <div class="text-gray-700 font-light mb-2">
-                  {{ desk.cards.length }} itens
-                </div>
-              </div>
+              <p class="text-gray-700 text-lg font-light">
+                Escolha o baralho para abrir ou crie um
+              </p>
             </div>
           </div>
 
-          <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
-            <div class="flex flex-col">
-              <button
-                mat-fab
-                color="primary"
-                aria-label="Criar Baralho"
-                (click)="openDialog()"
-              >
-                <mat-icon>add</mat-icon>
-              </button>
+          <div class="flex flex-wrap justify-center">
+            <div
+              *ngFor="let desk of desks; let i = index"
+              class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4"
+            >
+              <div class="flex flex-col">
+                <a (click)="showDetails(desk, i)" class="mx-auto">
+                  <img
+                    alt="Avatar"
+                    class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
+                    src="./../../../assets/images/pokemon.jpeg"
+                  />
+                </a>
+
+                <div class="text-center mt-6">
+                  <h1 class="text-gray-900 text-xl font-bold mb-1">
+                    {{ desk.nome }}
+                  </h1>
+
+                  <div class="text-gray-700 font-light mb-2">
+                    {{ desk.cards.length }} itens
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
+              <div class="flex flex-col">
+                <button
+                  mat-fab
+                  color="primary"
+                  aria-label="Criar Baralho"
+                  (click)="openDialog()"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</mat-sidenav-container>

@@ -23,7 +23,7 @@
           <button
             mat-icon-button
             (click)="add(card)"
-            matTooltip="Add to my desk"
+            matTooltip="Adicionar ao baralho"
           >
             <mat-icon>add</mat-icon>
           </button>
@@ -64,10 +64,23 @@
         </div>
       </div>
 
+      <div class="flex flex-wrap justify-center text-center mb-10 mt-10">
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+      </div>
+
       <div *ngIf="emptyResult">
         <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
           <h2>Nenhum item encontrado</h2>
         </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center text-center mb-10 mt-10">
+        <pk-pagination
+          *ngIf="!emptyResult && (characters$ | async)"
+          [page]="page"
+          (previous)="previous()"
+          (next)="next()"
+        ></pk-pagination>
       </div>
     </div>
   </mat-sidenav-content>

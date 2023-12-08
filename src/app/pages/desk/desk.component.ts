@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
   Observable,
@@ -24,6 +25,7 @@ import { CardComponent } from '../../components/card/card.component';
 import { CardDetailsComponent } from '../../components/card-details/card-details.component';
 import { DeskService } from '../../services/desk.service';
 import { Desk } from '../../interfaces/desk.interface';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
 
 @Component({
   selector: 'pk-desk',
@@ -32,10 +34,12 @@ import { Desk } from '../../interfaces/desk.interface';
     CommonModule,
     CardComponent,
     CardDetailsComponent,
+    PaginationComponent,
 
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [PokemonService],
   templateUrl: './desk.component.html',
@@ -48,10 +52,13 @@ export class BaralhoComponent {
   characters$ = new Observable<Card[]>();
   queryParams!: QueryParams;
   emptyResult = false;
-  resultsLength = 0;
   card!: Card;
   desk!: Desk;
+  page: number = 1;
   deskId: number = 0;
+  pageSize = 50;
+  totalPages = 0;
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,8 +71,8 @@ export class BaralhoComponent {
       debounceTime(300),
       switchMap((params) => {
         this.queryParams = {
-          page: 1,
-          pageSize: 30,
+          page: this.page,
+          pageSize: this.pageSize,
         };
 
         return this.getCards();
@@ -76,27 +83,44 @@ export class BaralhoComponent {
   }
 
   getCards(): Observable<any> {
+    this.isLoading = true;
     return this.pokemonService.getAll(this.queryParams).pipe(
       map((res: any) => {
-        console.log(res);
+        this.pageSize = res.pageSize;
+        this.totalPages = Math.round(res.totalCount / this.pageSize);
+
         if (res.data.length === 0) {
           this.emptyResult = true;
           this.characters$ = of([]);
           return;
         }
         this.emptyResult = false;
-        this.resultsLength = res.totalCount;
         this.queryParams.pageSize = res.pageSize;
         this.characters$ = of(res.data);
+        this.isLoading = false;
       }),
       catchError(() => (this.characters$ = of([]))),
       shareReplay(1)
     );
   }
 
-  showDetails(card: any) {
+  showDetails(card: Card) {
     this.card = card;
     this.drawer.open();
+  }
+
+  next() {
+    if (this.page < this.totalPages) {
+      this.page = this.page + 1;
+      this.getCharacters();
+    }
+  }
+
+  previous() {
+    if (this.page > 1) {
+      this.page = this.page - 1;
+      this.getCharacters();
+    }
   }
 
   add(card: Card) {

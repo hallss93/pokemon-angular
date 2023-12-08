@@ -48,6 +48,30 @@ export class DeskService {
     return this.existingDeskItems[index];
   }
 
+  getCountPokemonHasOneDesk(index: number) {
+    return this.existingDeskItems[index].cards.reduce((p, c) => {
+      if (c.supertype === 'Pokémon') return p + 1;
+      return p;
+    }, 0);
+  }
+
+  getCountTrainerHasOneDesk(index: number) {
+    return this.existingDeskItems[index].cards.reduce((p, c) => {
+      if (c.supertype === 'Trainer') return p + 1;
+      return p;
+    }, 0);
+  }
+
+  getCountTypesHasOneDesk(index: number) {
+    let types: string[] = [];
+
+    this.existingDeskItems[index].cards.forEach((item) => {
+      types = types.concat(item.types);
+    }, 0);
+
+    return new Set(types).size;
+  }
+
   addCard(index: number, card: Card) {
     this.items$
       .pipe(
@@ -120,6 +144,25 @@ export class DeskService {
               `Card: ${card.name} removido do baralho ${item.nome}`,
               'Close'
             );
+          } catch (e) {
+            this.snackbar.open(`Ocorreu um erro ${e}`, 'Close');
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  removeDesk(index: number) {
+    this.items$
+      .pipe(
+        take(1),
+        map((desks: Desk[]) => {
+          try {
+            desks.splice(index);
+
+            localStorage.setItem('desk', JSON.stringify(desks));
+
+            this.snackbar.open(`Baralho removido com sucesso`, 'Close');
           } catch (e) {
             this.snackbar.open(`Ocorreu um erro ${e}`, 'Close');
           }
