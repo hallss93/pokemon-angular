@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { CardComponent } from '../../components/card/card.component';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+
 import {
   Observable,
   catchError,
@@ -11,20 +16,33 @@ import {
   take,
 } from 'rxjs';
 import { Card } from '../../interfaces/card.interfacce';
-import { ActivatedRoute } from '@angular/router';
 import { QueryParams } from '../../interfaces/query-params.interface';
+
 import { PokemonService } from '../../services/pokemon.service';
-import { CommonModule } from '@angular/common';
+
+import { CardComponent } from '../../components/card/card.component';
+import { CardDetailsComponent } from '../../components/card-details/card-details.component';
 
 @Component({
   selector: 'pk-baralho',
   standalone: true,
-  imports: [CommonModule, CardComponent],
+  imports: [
+    CommonModule,
+    CardComponent,
+    CardDetailsComponent,
+
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+  ],
   providers: [PokemonService],
   templateUrl: './baralho.component.html',
   styleUrl: './baralho.component.scss',
 })
 export class BaralhoComponent {
+  @ViewChild('drawer')
+  drawer!: MatDrawer;
+
   characters$ = new Observable<Card[]>();
   queryParams!: QueryParams;
   emptyResult = false;
@@ -71,8 +89,9 @@ export class BaralhoComponent {
     );
   }
 
-  showDetails(card: Card) {
+  showDetails(card: any) {
     this.card = card;
+    this.drawer.open();
   }
 
   add(card: Card) {}
