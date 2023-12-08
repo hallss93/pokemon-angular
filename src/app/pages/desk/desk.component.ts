@@ -26,7 +26,7 @@ import { DeskService } from '../../services/desk.service';
 import { Desk } from '../../interfaces/desk.interface';
 
 @Component({
-  selector: 'pk-baralho',
+  selector: 'pk-desk',
   standalone: true,
   imports: [
     CommonModule,
@@ -38,8 +38,8 @@ import { Desk } from '../../interfaces/desk.interface';
     MatIconModule,
   ],
   providers: [PokemonService],
-  templateUrl: './baralho.component.html',
-  styleUrl: './baralho.component.scss',
+  templateUrl: './desk.component.html',
+  styleUrl: './desk.component.scss',
 })
 export class BaralhoComponent {
   @ViewChild('drawer')
