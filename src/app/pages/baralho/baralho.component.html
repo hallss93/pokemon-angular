@@ -1,1 +1,27 @@
-<p>baralho works!</p>
+<div class="card-content">
+  <div class="flex flex-wrap justify-center text-center mb-10 mt-10">
+    <div class="w-full lg:w-6/12 px-4">
+      <h1 class="text-gray-900 text-4xl font-bold mb-8">Nome do Baralho</h1>
+    </div>
+  </div>
+
+  <div *ngIf="characters$ | async as cardsList">
+    <div class="flex flex-row flex-wrap gap-4 items-center justify-center">
+      <ng-container *ngFor="let card of cardsList">
+        <div>
+          <pk-card
+            [card]="card"
+            (openDetail)="showDetails($event)"
+            (add)="add($event)"
+          ></pk-card>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="emptyResult">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+      <h2>Nenhum item encontrado</h2>
+    </div>
+  </div>
+</div>
