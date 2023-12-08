@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { Card } from '../../interfaces/card.interfacce';
+import { Card } from '../../interfaces/card.interface';
 
 @Component({
   selector: 'pk-card-details',

@@ -31,7 +31,20 @@
     <div
       class="flex flex-row flex-wrap gap-4 items-center justify-center w-full"
     >
-      <button mat-button color="primary" (click)="addCard(card)">
+      <button
+        *ngIf="isHasThatCard"
+        mat-button
+        color="accent"
+        (click)="removeCard(card)"
+      >
+        <span translate>Remover</span>
+      </button>
+      <button
+        *ngIf="!isHasThatCard"
+        mat-button
+        color="primary"
+        (click)="addCard(card)"
+      >
         <span translate>Adicionar</span>
       </button>
       <button mat-stroked-button color="accent" (click)="showCardDetails(card)">

@@ -1,26 +1,24 @@
 <div class="flex items-center justify-center bg-white py-48">
   <div class="flex flex-col">
     <div class="flex flex-col mt-8">
-      <!-- Meet the Team -->
       <div class="container max-w-7xl px-4">
-        <!-- Section Header -->
         <div class="flex flex-wrap justify-center text-center mb-24">
           <div class="w-full lg:w-6/12 px-4">
-            <!-- Header -->
             <h1 class="text-gray-900 text-4xl font-bold mb-8">Baralhos</h1>
 
-            <!-- Description -->
             <p class="text-gray-700 text-lg font-light">
-              Escolha o baralho para abrir
+              Escolha o baralho para abrir ou crie um
             </p>
           </div>
         </div>
 
         <div class="flex flex-wrap justify-center">
-          <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
+          <div
+            *ngFor="let desk of desks; let i = index"
+            class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4"
+          >
             <div class="flex flex-col">
-              <!-- Avatar -->
-              <a [routerLink]="['/baralho']" class="mx-auto">
+              <a [routerLink]="['/baralho/' + i + '/']" class="mx-auto">
                 <img
                   alt="Avatar"
                   class="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
@@ -28,14 +26,28 @@
                 />
               </a>
 
-              <!-- Details -->
               <div class="text-center mt-6">
-                <!-- Name -->
-                <h1 class="text-gray-900 text-xl font-bold mb-1">Baralho 1</h1>
+                <h1 class="text-gray-900 text-xl font-bold mb-1">
+                  {{ desk.nome }}
+                </h1>
 
-                <!-- Title -->
-                <div class="text-gray-700 font-light mb-2">20 itens</div>
+                <div class="text-gray-700 font-light mb-2">
+                  {{ desk.cards.length }} itens
+                </div>
               </div>
+            </div>
+          </div>
+
+          <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
+            <div class="flex flex-col">
+              <button
+                mat-fab
+                color="primary"
+                aria-label="Criar Baralho"
+                (click)="openDialog()"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { BaralhoComponent } from './pages/baralho/baralho.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'home' },
   {
-    path: 'baralho',
+    path: 'baralho/:id',
     component: BaralhoComponent,
     title: 'baralho',
   },

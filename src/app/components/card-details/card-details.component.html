@@ -1,29 +1,29 @@
-<mat-card class="mat-elevation-z3">
+<mat-card *ngIf="card" class="mat-elevation-z3">
   <mat-card-header>
     <div class="img-placeholder">
-      <img src="{{ card?.images?.small }}" alt="{{ card?.name }}" loading="lazy" />
+      <img src="{{ card.images.small }}" alt="{{ card.name }}" loading="lazy" />
     </div>
   </mat-card-header>
   <mat-card-content>
     <mat-card-title>
       <div fxLayout="row" fxLayoutAlign="space-between center">
-        <span fxFlex> {{ card?.name }} </span>
+        <span fxFlex> {{ card.name }} </span>
       </div>
     </mat-card-title>
     <mat-card-subtitle>
       <div fxLayout="column" fxLayoutAlign="start start">
-        <p [hidden]="!card?.hp"><strong>HP:</strong> {{ card?.hp }}</p>
-        <p><strong>Set:</strong> {{ card?.set?.name }}</p>
-        <p><strong>Series:</strong> {{ card?.set?.series }}</p>
+        <p [hidden]="!card.hp"><strong>HP:</strong> {{ card.hp }}</p>
+        <p><strong>Set:</strong> {{ card.set.name }}</p>
+        <p><strong>Series:</strong> {{ card.set.series }}</p>
       </div>
       <mat-divider></mat-divider>
     </mat-card-subtitle>
     <mat-card-subtitle>
       <p>
-        <strong> Supertype:</strong> {{ card?.supertype }} <br />
-        <strong> Subtypes:</strong> {{ card?.subtypes }}
+        <strong> Supertype:</strong> {{ card.supertype }} <br />
+        <strong> Subtypes:</strong> {{ card.subtypes }}
         <br />
-        <strong>Types:</strong> {{ card?.types }}
+        <strong>Types:</strong> {{ card.types }}
       </p>
     </mat-card-subtitle>
   </mat-card-content>

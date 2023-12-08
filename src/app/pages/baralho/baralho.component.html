@@ -41,8 +41,11 @@
   <mat-sidenav-content>
     <div class="card-content">
       <div class="flex flex-wrap justify-center text-center mb-10 mt-10">
-        <div class="w-full lg:w-6/12 px-4">
-          <h1 class="text-gray-900 text-4xl font-bold mb-8">Nome do Baralho</h1>
+        <div *ngIf="desk" class="w-full lg:w-6/12 px-4">
+          <h1 class="text-gray-900 text-4xl font-bold">
+            {{ desk.nome }}
+          </h1>
+          <small class="mb-8">{{ desk.cards.length }} cartas</small>
         </div>
       </div>
 
@@ -54,6 +57,7 @@
                 [card]="card"
                 (openDetail)="showDetails($event)"
                 (add)="add($event)"
+                (remove)="remove($event)"
               ></pk-card>
             </div>
           </ng-container>

@@ -15,13 +15,15 @@ import {
   switchMap,
   take,
 } from 'rxjs';
-import { Card } from '../../interfaces/card.interfacce';
+import { Card } from '../../interfaces/card.interface';
 import { QueryParams } from '../../interfaces/query-params.interface';
 
 import { PokemonService } from '../../services/pokemon.service';
 
 import { CardComponent } from '../../components/card/card.component';
 import { CardDetailsComponent } from '../../components/card-details/card-details.component';
+import { DeskService } from '../../services/desk.service';
+import { Desk } from '../../interfaces/desk.interface';
 
 @Component({
   selector: 'pk-baralho',
@@ -48,10 +50,13 @@ export class BaralhoComponent {
   emptyResult = false;
   resultsLength = 0;
   card!: Card;
+  desk!: Desk;
+  deskId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
-    private pokemonService: PokemonService
+    private pokemonService: PokemonService,
+    private deskService: DeskService
   ) {}
 
   getCharacters() {
@@ -94,9 +99,17 @@ export class BaralhoComponent {
     this.drawer.open();
   }
 
-  add(card: Card) {}
+  add(card: Card) {
+    this.deskService.addCard(this.deskId, card);
+  }
+
+  remove(card: Card) {
+    this.deskService.removeCard(this.deskId, card);
+  }
 
   ngOnInit() {
+    this.deskId = Number(this.route.snapshot.paramMap.get('id'));
     this.getCharacters();
+    this.desk = this.deskService.getDesk(this.deskId);
   }
 }
